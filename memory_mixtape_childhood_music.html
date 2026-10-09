@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Mixtape — Childhood Songs</title>
+<style>
+:root{--bg:#100f19;--panel:#1c1a2b;--text:#fff9f2;--muted:#bcb6ca;--pink:#ff6b9a;--orange:#ffb86b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#342044 0,var(--bg) 55%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+header{padding:22px clamp(18px,5vw,64px);border-bottom:1px solid #ffffff18;background:#100f19eF;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand{font-size:1.4rem;font-weight:950;letter-spacing:-.7px}.brand span{color:var(--pink)}
+.hero{padding:46px clamp(18px,5vw,64px) 28px}.eyebrow{color:var(--orange);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.76rem}
+h1{font-size:clamp(2.4rem,7vw,5rem);line-height:.98;letter-spacing:-2px;margin:13px 0}h1 span{color:var(--pink)}
+.hero p{color:var(--muted);max-width:680px;line-height:1.65}.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+input,select{background:var(--panel);color:var(--text);border:1px solid #ffffff25;border-radius:12px;padding:13px 15px;font:inherit}input{width:min(100%,400px)}input:focus,select:focus{outline:2px solid var(--pink)}
+main{padding:0 clamp(18px,5vw,64px) 50px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:18px 0}h2{margin:0;font-size:1.4rem}#count{font-size:.88rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}.card{background:var(--panel);border:1px solid #ffffff14;border-radius:17px;overflow:hidden;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-4px);border-color:#ff6b9a99}
+.cover{height:130px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,var(--c1),var(--c2));overflow:hidden}.cover:before,.cover:after{content:"";position:absolute;width:145px;height:145px;border:2px solid #ffffff35;border-radius:50%}.cover:after{width:95px;height:95px}.symbol{font-size:3.7rem;z-index:1;filter:drop-shadow(0 6px 6px #0003)}.label{position:absolute;left:10px;top:10px;background:#111b;border-radius:7px;padding:5px 8px;font-size:.68rem;font-weight:800;z-index:2}
+.body{padding:14px}.body h3{font-size:1rem;margin:0 0 5px}.body p{font-size:.84rem;color:var(--muted);margin:0 0 13px;line-height:1.45;min-height:36px}.listen{display:block;text-decoration:none;text-align:center;border-radius:10px;background:var(--pink);color:#24101a;font-weight:850;padding:10px}.listen:hover{filter:brightness(1.08)}
+.note{color:var(--muted);font-size:.85rem;line-height:1.6;border-top:1px solid #ffffff18;padding:22px clamp(18px,5vw,64px)}.empty{display:none;padding:28px;text-align:center;background:var(--panel);border-radius:14px;color:var(--muted)}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cover{height:105px}.symbol{font-size:3rem}.body{padding:11px}.body p{min-height:54px}.body h3{font-size:.93rem}}
+</style>
+</head>
+<body>
+<header><div class="brand">🎧 Memory<span>Mixtape</span></div></header>
+<section class="hero">
+<div class="eyebrow">Press play on a memory</div><h1>Our childhood.<br><span>Our soundtrack.</span></h1>
+<p>From songs we heard on the radio to cartoon openings and video-game music, explore a mixtape full of memories. Pick a song to find it on YouTube.</p>
+<div class="tools"><input id="search" type="search" placeholder="🔎 Search songs or artists..." aria-label="Search songs">
+<select id="category" aria-label="Filter by music category"><option value="all">All memories</option><option value="pop">2000s & 2010s pop</option><option value="cartoon">Cartoon theme songs</option><option value="games">Video-game music</option><option value="classics">Older classics</option><option value="global">Global & party hits</option></select></div>
+</section>
+<main><div class="section-head"><h2>💿 The mixtape shelf</h2><span id="count"></span></div><div class="grid" id="grid"></div><div class="empty" id="empty">No songs found. Try a different search!</div></main>
+<footer class="note"><strong>Make it your mixtape:</strong> This is a fan-made discovery page. The cards use decorative artwork, and each button opens YouTube search results rather than hosting audio files. Some songs may have regional restrictions or may not be available from official channels.</footer>
+<script>
+const songs = [
+["Baby","Justin Bieber","2010","pop","🎤","#ff6b9a","#784ba0","An unforgettable early-2010s pop hit."],
+["Call Me Maybe","Carly Rae Jepsen","2011","pop","📱","#ffafcc","#c77dff","The catchy song everyone seemed to know."],
+["Party Rock Anthem","LMFAO","2011","pop","🪩","#ffb703","#fb5607","A dance-floor classic from the 2010s."],
+["Waka Waka (This Time for Africa)","Shakira","2010","global","⚽","#80ed99","#219ebc","A football anthem remembered around the world."],
+["Gangnam Style","PSY","2012","global","🐎","#48cae4","#4361ee","The viral dance phenomenon."],
+["Danza Kuduro","Don Omar ft. Lucenzo","2010","global","💃","#f72585","#7209b7","A high-energy party favorite."],
+["Ai Se Eu Te Pego","Michel Teló","2011","global","🎉","#ffd166","#f77f00","A worldwide sing-along hit."],
+["Fireflies","Owl City","2009","pop","✨","#90e0ef","#5e60ce","Dreamy synth-pop full of nostalgia."],
+["Somebody That I Used to Know","Gotye ft. Kimbra","2011","pop","🎨","#b8c0ff","#6930c3","An instantly recognizable duet."],
+["Rolling in the Deep","Adele","2010","pop","🎙️","#6d597a","#e56b6f","A powerful song from the early 2010s."],
+["Tik Tok","Kesha","2009","pop","⏰","#ffb86b","#e76f51","A party-pop hit from the turn of the decade."],
+["Poker Face","Lady Gaga","2008","pop","🃏","#343a40","#9d4edd","Electro-pop from the late 2000s."],
+["Umbrella","Rihanna ft. Jay-Z","2007","pop","☔","#adb5bd","#495057","A huge radio hit with an iconic hook."],
+["Hips Don't Lie","Shakira ft. Wyclef Jean","2006","global","🌴","#ff9f1c","#e63946","A dance-pop favorite of the 2000s."],
+["Crazy Frog — Axel F","Crazy Frog","2005","global","🐸","#80ffdb","#00b4d8","The ringtone-era tune that got stuck in heads."],
+["Dragostea Din Tei","O-Zone","2003","global","🎶","#f9c74f","#f9844a","A European pop phenomenon."],
+["Blue (Da Ba Dee)","Eiffel 65","1998","classics","🔵","#4cc9f0","#3a0ca3","A late-90s dance classic."],
+["Barbie Girl","Aqua","1997","classics","🎀","#ff70a6","#ff9770","Bubblegum pop with a playful sound."],
+["Mambo No. 5","Lou Bega","1999","classics","🎺","#fcbf49","#d62828","A party classic from the late 90s."],
+["Macarena","Los del Río","1993","global","🕺","#f4a261","#e76f51","A dance that brought everyone together."],
+["I Want It That Way","Backstreet Boys","1999","classics","💿","#a2d2ff","#4361ee","A boy-band sing-along classic."],
+["Wannabe","Spice Girls","1996","classics","⭐","#ff8fab","#fb6f92","A pop anthem from the 90s."],
+["Happy","Pharrell Williams","2013","pop","☀️","#ffe066","#ff9f1c","An upbeat song heard everywhere."],
+["Let It Go","Idina Menzel — Frozen","2013","cartoon","❄️","#caf0f8","#5390d9","A Disney song many kids sang along to."],
+["We Are Number One","LazyTown","2000s","cartoon","🥇","#ff595e","#6a4c93","A memorable TV song and internet favorite."],
+["Pokémon Theme Song","Pokémon","1997","cartoon","⚡","#ffca3a","#f77f00","The opening theme for a legendary adventure."],
+["What's New, Scooby-Doo?","Simple Plan","2002","cartoon","🐕","#43aa8b","#577590","The energetic theme from the 2000s series."],
+["SpongeBob SquarePants Theme","SpongeBob SquarePants","1999","cartoon","🧽","#ffd166","#f77f00","A pirate-style opening everyone remembers."],
+["Phineas and Ferb Theme","Bowling for Soup","2007","cartoon","☀️","#ffb703","#fb8500","There's 104 days of summer vacation..."],
+["Teen Titans Theme","Puffy AmiYumi","2003","cartoon","🦸","#bdb2ff","#7b2cbf","A high-energy superhero cartoon opening."],
+["Mii Channel Theme","Nintendo Wii","2006","games","🎮","#90e0ef","#0077b6","The cheerful tune from making a Mii."],
+["Wii Sports Theme","Nintendo","2006","games","🎾","#80ed99","#2d6a4f","Music tied to family game nights."],
+["Super Mario Bros. Theme","Nintendo","1985","games","🍄","#ff595e","#ffca3a","One of gaming's most recognizable melodies."],
+["Minecraft — Sweden","C418","2011","games","⛏️","#95d5b2","#40916c","A calm soundtrack from a blocky world."],
+["Angry Birds Theme","Angry Birds","2009","games","🐦","#ff595e","#e63946","A familiar tune from the mobile-game era."],
+["Club Penguin Music","Club Penguin","2005","games","🐧","#caf0f8","#48cae4","Music from the snowy online world."],
+["The Sims — Buy Mode","The Sims","2000","games","💎","#80ffdb","#5390d9","A cozy soundtrack from virtual life."],
+["Numa Numa","Gary Brolsma / O-Zone","2004","global","💻","#cdb4db","#9d4edd","An early internet video and music memory."]
+];
+const grid=document.getElementById("grid"),search=document.getElementById("search"),category=document.getElementById("category"),count=document.getElementById("count"),empty=document.getElementById("empty");
+function render(){
+const term=search.value.trim().toLowerCase(),cat=category.value;
+const list=songs.filter(s=>(s[0]+" "+s[1]+" "+s[2]).toLowerCase().includes(term)&&(cat==="all"||s[3]===cat));
+grid.innerHTML=list.map(s=>`<article class="card"><div class="cover" style="--c1:${s[5]};--c2:${s[6]}"><span class="label">${s[2]}</span><span class="symbol" aria-hidden="true">${s[4]}</span></div><div class="body"><h3>${s[0]}</h3><p>${s[1]} · ${s[7]}</p><a class="listen" href="https://www.youtube.com/results?search_query=${encodeURIComponent(s[0]+" "+s[1]+" official audio")}" target="_blank" rel="noopener noreferrer">▶ Find on YouTube</a></div></article>`).join("");
+count.textContent=`${list.length} song${list.length===1?"":"s"}`;empty.style.display=list.length?"none":"block";
+}
+search.addEventListener("input",render);category.addEventListener("change",render);render();
+</script>
+</body></html>

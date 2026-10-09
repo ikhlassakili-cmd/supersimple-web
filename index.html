@@ -1,0 +1,686 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Souvenirs & Nostalgie</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background-color: #f5efe6;
+            color: #4b3b2f;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            height: 500px;
+
+            background: linear-gradient(
+                rgba(70, 50, 35, 0.65),
+                rgba(70, 50, 35, 0.65)
+            ),
+            url("https://images.unsplash.com/photo-1500534623283-312aade485b7")
+            center/cover;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        header p {
+            font-size: 23px;
+            font-style: italic;
+        }
+
+        /* ================= MENU ================= */
+
+        nav {
+            background-color: #3f3025;
+            padding: 18px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 25px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            color: #d9b98c;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        section {
+            padding: 70px 10%;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #634936;
+        }
+
+        .intro {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        /* ================= CARTES ================= */
+
+        .souvenirs {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 280px;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #72543d;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+
+        .card p {
+            line-height: 1.6;
+        }
+
+        /* ================= FENETRES ================= */
+
+        .fenetre {
+            display: none;
+
+            position: fixed;
+            z-index: 1000;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0,0,0,0.75);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fenetre-contenu {
+            background-color: #fffaf3;
+
+            width: 85%;
+            max-width: 700px;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            animation: apparition 0.4s;
+        }
+
+        .fenetre-contenu img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .texte-fenetre {
+            padding: 35px;
+            text-align: center;
+        }
+
+        .texte-fenetre h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #634936;
+        }
+
+        .texte-fenetre p {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        /* Bouton fermer */
+
+        .fermer {
+            position: absolute;
+
+            top: 15px;
+            right: 20px;
+
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background-color: white;
+
+            color: #4b3b2f;
+
+            font-size: 28px;
+
+            text-align: center;
+            line-height: 36px;
+
+            cursor: pointer;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .fermer:hover {
+            background-color: #634936;
+            color: white;
+        }
+
+        .bouton {
+            margin-top: 25px;
+
+            padding: 12px 25px;
+
+            border: none;
+            border-radius: 25px;
+
+            background-color: #634936;
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .bouton:hover {
+            background-color: #3f3025;
+        }
+
+        /* ================= ANIMATION ================= */
+
+        @keyframes apparition {
+
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+        }
+
+        /* ================= NOSTALGIE ================= */
+
+        .memory {
+            background-color: #fffaf3;
+            text-align: center;
+        }
+
+        .memory p {
+            max-width: 750px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.8;
+        }
+
+        /* ================= CITATION ================= */
+
+        .quote {
+            background-color: #d9c2a3;
+
+            text-align: center;
+
+            font-size: 25px;
+
+            font-style: italic;
+
+            line-height: 1.7;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background-color: #3f3025;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <h1>Souvenirs & Nostalgie</h1>
+
+        <p>
+            « Certains souvenirs ne vieillissent jamais. »
+        </p>
+
+    </header>
+
+
+    <!-- ================= MENU ================= -->
+
+    <nav>
+
+        <a href="#accueil">Accueil</a>
+
+        <a href="#souvenirs">Souvenirs</a>
+
+        <a href="#nostalgie">Nostalgie</a>
+
+        <a href="#citation">Citation</a>
+
+    </nav>
+
+
+    <!-- ================= ACCUEIL ================= -->
+
+    <section id="accueil">
+
+        <h2>Les souvenirs</h2>
+
+        <p class="intro">
+
+            Les souvenirs sont des fragments de notre passé qui restent
+            gravés dans notre mémoire. Ils peuvent être liés à une personne,
+            un lieu, une odeur, une chanson ou simplement à un moment heureux.
+
+            Ils nous permettent de revivre certaines émotions et de garder
+            une partie de notre passé avec nous.
+
+        </p>
+
+    </section>
+
+
+    <!-- ================= SOUVENIRS PRECIEUX ================= -->
+
+    <section id="souvenirs">
+
+        <h2>Des souvenirs précieux</h2>
+
+
+        <div class="souvenirs">
+
+
+            <!-- CARTE FAMILLE -->
+
+            <div class="card" onclick="ouvrir('famille')">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511895426328-dc8714191300"
+                    alt="Famille"
+                >
+
+                <div class="card-content">
+
+                    <h3>👨‍👩‍👧‍👦 La famille</h3>
+
+                    <p>
+                        Les moments passés avec ceux que nous aimons.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARTE ENFANCE -->
+
+            <div class="card" onclick="ouvrir('enfance')">
+
+                <img
+                    src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9"
+                    alt="Enfance"
+                >
+
+                <div class="card-content">
+
+                    <h3>🧸 L'enfance</h3>
+
+                    <p>
+                        Une époque pleine de jeux, de découvertes et de rêves.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARTE VOYAGE -->
+
+            <div class="card" onclick="ouvrir('voyage')">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+                    alt="Voyage"
+                >
+
+                <div class="card-content">
+
+                    <h3>🌅 Les voyages</h3>
+
+                    <p>
+                        Des lieux et des aventures que nous n'oublions jamais.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- FENETRE FAMILLE -->
+    <!-- ================================================= -->
+
+    <div id="famille" class="fenetre">
+
+        <div class="fenetre-contenu">
+
+            <span class="fermer" onclick="fermer('famille')">
+                ×
+            </span>
+
+            <img
+                src="https://images.unsplash.com/photo-1511895426328-dc8714191300"
+                alt="Souvenir de famille"
+            >
+
+            <div class="texte-fenetre">
+
+                <h2>👨‍👩‍👧‍👦 La famille</h2>
+
+                <p>
+
+                    Les souvenirs de famille sont parmi les plus précieux.
+                    Un repas autour de la table, un anniversaire, une fête
+                    ou simplement une soirée passée ensemble peut devenir
+                    un souvenir inoubliable.
+
+                    <br><br>
+
+                    Avec le temps, nous comprenons à quel point ces petits
+                    moments étaient importants.
+
+                </p>
+
+                <button class="bouton" onclick="fermer('famille')">
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FENETRE ENFANCE -->
+    <!-- ================================================= -->
+
+    <div id="enfance" class="fenetre">
+
+        <div class="fenetre-contenu">
+
+            <span class="fermer" onclick="fermer('enfance')">
+                ×
+            </span>
+
+            <img
+                src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9"
+                alt="Souvenir d'enfance"
+            >
+
+            <div class="texte-fenetre">
+
+                <h2>🧸 L'enfance</h2>
+
+                <p>
+
+                    L'enfance est une période pleine de simplicité
+                    et d'insouciance.
+
+                    <br><br>
+
+                    Les jeux avec les amis, les journées à l'école,
+                    les vacances, les dessins animés et les petits
+                    bonheurs de chaque jour restent longtemps dans
+                    notre mémoire.
+
+                    <br><br>
+
+                    Lorsque nous y repensons, une douce nostalgie
+                    peut apparaître.
+
+                </p>
+
+                <button class="bouton" onclick="fermer('enfance')">
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FENETRE VOYAGE -->
+    <!-- ================================================= -->
+
+    <div id="voyage" class="fenetre">
+
+        <div class="fenetre-contenu">
+
+            <span class="fermer" onclick="fermer('voyage')">
+                ×
+            </span>
+
+            <img
+                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+                alt="Souvenir de voyage"
+            >
+
+            <div class="texte-fenetre">
+
+                <h2>🌅 Les voyages</h2>
+
+                <p>
+
+                    Certains voyages restent gravés dans notre mémoire
+                    pour toujours.
+
+                    <br><br>
+
+                    Un magnifique paysage, une nouvelle ville, une
+                    rencontre inattendue ou une aventure particulière
+                    peuvent créer des souvenirs extraordinaires.
+
+                    <br><br>
+
+                    Même des années plus tard, une simple photographie
+                    peut nous faire revivre ces moments.
+
+                </p>
+
+                <button class="bouton" onclick="fermer('voyage')">
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= NOSTALGIE ================= -->
+
+    <section id="nostalgie" class="memory">
+
+        <h2>La nostalgie</h2>
+
+        <p>
+
+            La nostalgie est ce sentiment particulier que nous ressentons
+            lorsque nous pensons à une époque passée.
+
+            Elle peut être douce et agréable, mais parfois aussi accompagnée
+            d'une certaine tristesse.
+
+            Elle nous rappelle les personnes, les lieux et les moments
+            que nous ne pouvons plus retrouver exactement comme avant.
+
+        </p>
+
+    </section>
+
+
+    <!-- ================= CITATION ================= -->
+
+    <section id="citation" class="quote">
+
+        <p>
+            « On ne se souvient pas des jours,
+            on se souvient des moments. »
+        </p>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 — Souvenirs & Nostalgie
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function ouvrir(id) {
+
+            document.getElementById(id).style.display = "flex";
+
+        }
+
+
+        function fermer(id) {
+
+            document.getElementById(id).style.display = "none";
+
+        }
+
+
+        /* Fermer en cliquant en dehors de la fenêtre */
+
+        window.onclick = function(event) {
+
+            if (event.target.classList.contains("fenetre")) {
+
+                event.target.style.display = "none";
+
+            }
+
+        };
+
+    </script>
+
+
+</body>
+<h1>les bien jours </h1>
+<a href="retrotoons_cartoon_collection (1).html">  
+<div style="text-align: center;">
+    <img src="Nouveau dossier/10-meilleures-emissions-de-Cartoon-Network-des-annees-2010-classees.webp" width="390" alt="10-meilleures-emissions-de-Cartoon-Network-des-annees-2010-classees.webp">
+</div>
+</a>
+<h1>les bien musics</h1>
+<a href="memory_mixtape_childhood_music.html">
+    <div style="text-align: center;">
+        <img src="Nouveau dossier/123.jpg" width="500" alt="123">
+    </div>
+</a>
+</html>
+```
